@@ -11,6 +11,19 @@ export default class Test extends React.Component {
     list: ['B', 'L', 'T'],
     counter: 3,
     text: '',
+    pokemonName: 'pikachu',
+    pokeUrl: '',
+  };
+
+  componentDidMount() {
+    fetch('https://pokeapi.co/api/v2/pokemon/1/')
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          pokemonName: json.name,
+          pokeUrl: json.sprites.front_default,
+        })
+      });
   };
 
   handleButtonClick = () => {
@@ -51,6 +64,7 @@ export default class Test extends React.Component {
   };
   
   render() { 
+    // console.log(this.state.pokeUrl);
     return (
       <div>
         Count: {this.state.list.length}
@@ -75,6 +89,10 @@ export default class Test extends React.Component {
           onChange={this.handleInputChange}
           onKeyPress={this.handleEnter}/>
         <button onClick={this.handleAddShoppingBag}>Add</button>
+        <h3>
+          Pokemon: {this.state.pokemonName}
+        </h3>
+        <img src={this.state.pokeUrl} />
       </div>
     );
   }
